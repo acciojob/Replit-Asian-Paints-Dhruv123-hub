@@ -1,16 +1,99 @@
 <!DOCTYPE html>
-
-<html>
-
+<html lang="en">
 <head>
-	<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+
+        #grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            width: 300px;
+        }
+
+        .grid-item {
+            width: 100px;
+            height: 100px;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #block_id, #colour_id {
+            margin: 10px 0;
+        }
+
+        #change_button, #reset_button {
+            padding: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+    </style>
+    <title>Asian Paints</title>
 </head>
-
 <body>
-	<!-- the entire body must be written by student -->
-    <script type="text/javascript" src="./script.js">
-</script>
+    <h1>Asian Paints</h1>
+    <input type="number" id="block_id" placeholder="Block ID (1-9)">
+    <input type="color" id="colour_id">
+    <button id="change_button">Change Color</button>
+    <button id="reset_button">Reset</button>
+    <div id="grid-container">
+        <!-- Grid items will be added here -->
+    </div>
 
+    <script>
+        const gridContainer = document.getElementById('grid-container');
+        const blockIdInput = document.getElementById('block_id');
+        const colorInput = document.getElementById('colour_id');
+        const changeButton = document.getElementById('change_button');
+        const resetButton = document.getElementById('reset_button');
+
+        // Function to change the background color of a grid item
+        function changeColor() {
+            const blockId = blockIdInput.value;
+            const color = colorInput.value;
+            const gridItem = document.getElementById(blockId);
+
+            if (gridItem) {
+                gridItem.style.backgroundColor = color;
+            }
+        }
+
+        // Function to reset all grid item colors to transparent
+        function resetColors() {
+            const gridItems = document.querySelectorAll('.grid-item');
+            gridItems.forEach(item => {
+                item.style.backgroundColor = 'transparent';
+            });
+        }
+
+        // Event listeners
+        changeButton.addEventListener('click', changeColor);
+        resetButton.addEventListener('click', resetColors);
+
+        // Create grid items
+        for (let i = 1; i <= 9; i++) {
+            const gridItem = document.createElement('div');
+            gridItem.className = 'grid-item';
+            gridItem.id = i;
+            gridItem.textContent = i;
+            gridItem.addEventListener('click', () => {
+                blockIdInput.value = i;
+                changeColor();
+            });
+            gridContainer.appendChild(gridItem);
+        }
+    </script>
 </body>
-
 </html>
+
